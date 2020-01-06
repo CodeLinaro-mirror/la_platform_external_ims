@@ -28,16 +28,18 @@
 
 package com.android.service.ims.presence;
 
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.RemoteException;
-import android.telephony.ims.stub.RcsPresenceExchangeImplBase;
-import android.util.Log;
 import android.os.Parcel;
+import android.os.RemoteException;
+import android.util.Log;
 
+import com.android.ims.RcsManager;
+import com.android.ims.internal.Logger;
+import com.android.ims.internal.uce.common.StatusCode;
 import com.android.ims.internal.uce.presence.IPresenceListener;
 import com.android.ims.internal.uce.presence.PresCmdId;
 import com.android.ims.internal.uce.presence.PresCmdStatus;
@@ -46,12 +48,6 @@ import com.android.ims.internal.uce.presence.PresResInfo;
 import com.android.ims.internal.uce.presence.PresRlmiInfo;
 import com.android.ims.internal.uce.presence.PresSipResponse;
 import com.android.ims.internal.uce.presence.PresTupleInfo;
-import com.android.ims.internal.uce.common.StatusCode;
-
-import com.android.ims.RcsManager;
-
-import com.android.ims.internal.Logger;
-import com.android.service.ims.RcsPresenceExchangeImpl;
 import com.android.service.ims.RcsStackAdaptor;
 
 public class StackListener extends Handler{
@@ -379,18 +375,7 @@ public class StackListener extends Handler{
                          publishTrigger.getPublishTrigeerType());
             }
             logger.debug("ListenerHandler : PublishTriggering");
-            RcsPresenceExchangeImplBase rcsPresenceExchange = RcsStackAdaptor.getInstance(null)
-                    .getRcsPresenceExchangeImplBase();
-            if (rcsPresenceExchange != null) {
-                try {
-                    logger.debug("onNotifyUpdateCapabilites");
-                    rcsPresenceExchange.onNotifyUpdateCapabilites();
-                } catch (Exception e) {
-                    logger.error(e.getMessage());
-                }
-            } else {
-                logger.debug("rcsPresenceExchange = null for publishTriggering");
-            }
+
             Message publishTrigerMsg = StackListener.this.obtainMessage(
                     PRESENCE_IMS_UNSOL_PUBLISH_TRIGGER, publishTrigger);
             StackListener.this.sendMessage(publishTrigerMsg);
@@ -531,19 +516,6 @@ public class StackListener extends Handler{
 
         public void unpublishMessageSent() {
             logger.debug("unpublishMessageSent()");
-            RcsPresenceExchangeImpl rcsPresenceExchange =
-                    (RcsPresenceExchangeImpl) RcsStackAdaptor.getInstance(null)
-                            .getRcsPresenceExchangeImplBase();
-            if (rcsPresenceExchange != null) {
-                try {
-                    logger.debug("onUnpublish");
-                    rcsPresenceExchange.onUnpublish();
-                } catch (Exception e) {
-                    logger.error(e.getMessage());
-                }
-            } else {
-                logger.debug("rcsPresenceExchange = null for unpublish sent");
-            }
         }
     };
 }
