@@ -28,23 +28,16 @@
 
 package com.android.service.ims.presence;
 
-import com.android.ims.internal.Logger;
-import com.android.ims.IRcsPresenceListener;
-
 /**
  * PresencePublishTask
  */
 public class PresencePublishTask extends PresenceTask{
-    /*
-     * The logger
-     */
-    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     private long mCreateTimestamp = 0;
 
     private int mRetryCount = 0;
 
-    public PresencePublishTask(int taskId, int cmdId, IRcsPresenceListener listener,
+    public PresencePublishTask(int taskId, int cmdId, ContactCapabilityResponse listener,
             String[] contacts){
         super(taskId, cmdId, listener, contacts);
 
