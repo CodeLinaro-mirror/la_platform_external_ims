@@ -28,7 +28,6 @@
 
 package com.android.service.ims.presence;
 
-import com.android.ims.IRcsPresenceListener;
 import com.android.ims.internal.Logger;
 
 /**
@@ -45,7 +44,7 @@ public class PresenceAvailabilityTask extends PresenceTask{
     // Time when get the notify. Used to check the 60s expires.
     private long mNotifyTimeStamp = 0;
 
-    public PresenceAvailabilityTask(int taskId, int cmdId, IRcsPresenceListener listener,
+    public PresenceAvailabilityTask(int taskId, int cmdId, ContactCapabilityResponse listener,
             String[] contacts){
         super(taskId, cmdId, listener, contacts);
 
