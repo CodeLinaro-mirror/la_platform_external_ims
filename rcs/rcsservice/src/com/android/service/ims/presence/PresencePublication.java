@@ -941,8 +941,8 @@ public class PresencePublication extends PresenceBase {
         RcsContactPresenceTuple.Builder tupleBuilder = new RcsContactPresenceTuple.Builder(
                 RcsContactPresenceTuple.TUPLE_BASIC_STATUS_OPEN,
                 RcsContactPresenceTuple.SERVICE_ID_MMTEL, "1.0");
-        tupleBuilder.addContactUri(contact)
-                .addServiceCapabilities(servCapsBuilder.build());
+        tupleBuilder.setContactUri(contact)
+                .setServiceCapabilities(servCapsBuilder.build());
 
         PresenceBuilder presenceBuilder = new PresenceBuilder(contact,
                 RcsContactUceCapability.SOURCE_TYPE_CACHED,
@@ -1033,7 +1033,7 @@ public class PresencePublication extends PresenceBase {
         Intent intent = new Intent(ACTION_RETRY_PUBLISH_ALARM);
         intent.setPackage(mContext.getPackageName());
         mRetryAlarmIntent = PendingIntent.getBroadcast(mContext, 0, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
 
         if(mAlarmManager == null) {
             mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
