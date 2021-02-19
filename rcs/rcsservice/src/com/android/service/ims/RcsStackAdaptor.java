@@ -420,7 +420,7 @@ public class RcsStackAdaptor implements PresencePublisher, SubscribePublisher {
     }
 
     private boolean isVolteSupported(RcsContactUceCapability capabilities) {
-        RcsContactPresenceTuple presenceTuple = capabilities.getPresenceTuple(
+        RcsContactPresenceTuple presenceTuple = capabilities.getCapabilityTuple(
                 RcsContactPresenceTuple.SERVICE_ID_MMTEL);
         if (presenceTuple != null) {
             ServiceCapabilities serviceCaps = presenceTuple.getServiceCapabilities();
@@ -432,7 +432,7 @@ public class RcsStackAdaptor implements PresencePublisher, SubscribePublisher {
     }
 
     private boolean isVtSupported(RcsContactUceCapability capabilities) {
-        RcsContactPresenceTuple presenceTuple = capabilities.getPresenceTuple(
+        RcsContactPresenceTuple presenceTuple = capabilities.getCapabilityTuple(
                 RcsContactPresenceTuple.SERVICE_ID_MMTEL);
         if (presenceTuple != null) {
             ServiceCapabilities serviceCaps = presenceTuple.getServiceCapabilities();
@@ -696,10 +696,8 @@ public class RcsStackAdaptor implements PresencePublisher, SubscribePublisher {
             Intent intent = new Intent(ACTION_RETRY_ALARM);
             intent.putExtra("times", times);
             intent.setPackage(mContext.getPackageName());
-            // TODO(b/173539899): Please replace FLAG_MUTABLE_UNAUDITED below
-            // with either FLAG_IMMUTABLE (recommended) or FLAG_MUTABLE.
             mRetryAlarmIntent = PendingIntent.getBroadcast(mContext, 0, intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE_UNAUDITED);
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             // Wait for 1s to ignore duplicate init request as possible as we can.
             long timeSkip = 1000;
