@@ -59,6 +59,7 @@ java_defaults {
     srcs: ["src/**/*.java"],
     static_libs: ["com.android.ims.rcsmanager"],
     certificate: "platform",
+    system_ext_specific: true,
     platform_apis: true,
     optimize: {
         proguard_flags_files: ["proguard.flags"],
@@ -68,7 +69,6 @@ java_defaults {
 android_app {
     name: "PresencePolling",
     defaults: ["presence_polling_defaults"],
-    system_ext_specific: true,
 }
 
 android_test_helper_app {
